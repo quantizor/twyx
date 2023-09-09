@@ -1,11 +1,11 @@
 import type { Config } from "tailwindcss";
-import { transformJSXProps } from "./transformer";
+import { transformTwyxProps } from "./transformer";
 
 export default {
   content: {
-    files: [],
+    files: ["./demo/**/*.tsx"],
     transform: {
-      tsx: transformJSXProps,
+      tsx: transformTwyxProps,
     },
   },
   theme: {

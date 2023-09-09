@@ -153,4 +153,5 @@ elements.forEach((el) => {
   x[el] = elementFactory(el);
 });
 
+export * from "./core";
 export { x };

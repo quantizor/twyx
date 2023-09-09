@@ -1,9 +1,36 @@
 {
-  "dependencies": { "clsx": "^2.0.0", "csstype": "^3.1.2" },
+  "name": "twyx",
+  "author": "Evan Jacobs",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./.generated/core.js",
+    "./react": "./.generated/react.js",
+    "./transformer": "./.generated/transformer.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "clsx": "^2.0.0",
+    "csstype": "^3.1.2"
+  },
   "devDependencies": {
+    "@types/debug": "^4.1.8",
+    "@types/escodegen-jsx": "npm:@types/escodegen",
     "@types/react": "^18.2.21",
+    "ast-types": "^0.14.2",
+    "bun-types": "^1.0.1",
+    "debug": "^4.3.4",
+    "escodegen-jsx": "^0.1.0-1.4.2dev",
+    "espree": "^9.6.1",
     "react": "^18.2.0",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "unquote": "^1.1.1"
+  },
+  "scripts": {
+    "compile:tailwind": "tailwindcss -i demo/style.css -o demo/public/style.generated.css --minify"
   }
 }

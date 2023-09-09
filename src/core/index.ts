@@ -10,6 +10,7 @@ export type ResponsiveValues = Partial<
   Record<Breakpoints | Modes, string | number | Partial<Record<Breakpoints | Modes | States, string | number>>>
 >;
 
+// empty string means the value is passed directly as a class, as for "display"
 const xStyledToTailwindMap = {
   p: "p",
   px: "px",
@@ -33,6 +34,7 @@ const xStyledToTailwindMap = {
   maxHeight: "max-h",
   bg: "bg",
   color: "text",
+  display: "",
   fontSize: "text",
   fontWeight: "font",
   textAlign: "text",
@@ -61,7 +63,7 @@ const xStyledToTailwindMap = {
 export type TwyxProps = Record<keyof typeof xStyledToTailwindMap, string | number | ResponsiveValues>;
 
 const convertPropToTailwind = (key: keyof typeof xStyledToTailwindMap, value: string, prefix = ""): string => {
-  return prefix + xStyledToTailwindMap[key] + value;
+  return prefix + (xStyledToTailwindMap[key] ? xStyledToTailwindMap[key] + "-" : "") + value;
 };
 
 const handleResponsiveValues = (
