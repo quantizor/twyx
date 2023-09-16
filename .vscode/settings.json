@@ -1,5 +1,11 @@
 {
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
-  }
+  },
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": "on"
+  },
+  "tailwindCSS.colorDecorators": false
 }

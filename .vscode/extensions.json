@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "oven.bun-vscode",
+    "bradlc.vscode-tailwindcss",
+    "jaaxxx.bun-lockb",
+    "tamasfe.even-better-toml",
+    "me-dutour-mathieu.vscode-github-actions",
+    "christian-kohler.path-intellisense",
+    "redhat.vscode-yaml"
+  ]
+}

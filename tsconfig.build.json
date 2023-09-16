@@ -1,0 +1,11 @@
+// this file is what is read to build the declaration files
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": ".generated",
+    "emitDeclarationOnly": true,
+    "noEmit": false
+  },
+  "exclude": ["src/**/*.test.*"]
+}

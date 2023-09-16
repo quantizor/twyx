@@ -11,5 +11,4 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
 } as Config;

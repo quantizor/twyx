@@ -1,0 +1,24 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+  pull_request_target:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup
+      - run: bun compile
+        name: compile
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup
+      - run: bun test
+        name: test

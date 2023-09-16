@@ -1,36 +1,84 @@
 {
   "name": "twyx",
-  "author": "Evan Jacobs",
-  "version": "0.0.0",
+  "author": "Evan Jacobs <probablyup@gmail.com> (https://probablyup.com)",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/probablyup/twyx"
+  },
+  "module": ".generated/core.js",
+  "types": ".generated/src/core.d.ts",
   "exports": {
-    ".": "./.generated/core.js",
-    "./react": "./.generated/react.js",
-    "./transformer": "./.generated/transformer.js"
+    ".": {
+      "types": "./.generated/src/core.d.ts",
+      "import": "./.generated/core.js"
+    },
+    "./react": {
+      "types": "./.generated/src/react.d.ts",
+      "import": "./.generated/react.js"
+    },
+    "./transformer": {
+      "types": "./.generated/transformer.d.ts",
+      "import": "./.generated/transformer.js"
+    }
   },
   "files": [
-    "dist",
+    ".generated",
     "README.md",
     "LICENSE"
   ],
+  "sideEffects": false,
   "dependencies": {
-    "clsx": "^2.0.0",
-    "csstype": "^3.1.2"
+    "csstype": "^3.1.2",
+    "tailwindcss": "^3.3.3"
   },
   "devDependencies": {
     "@types/debug": "^4.1.8",
     "@types/escodegen-jsx": "npm:@types/escodegen",
     "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "@types/react-test-renderer": "^18.0.2",
     "ast-types": "^0.14.2",
     "bun-types": "^1.0.1",
+    "bundlemon": "^2.0.2",
+    "concurrently": "^8.2.1",
     "debug": "^4.3.4",
     "escodegen-jsx": "^0.1.0-1.4.2dev",
     "espree": "^9.6.1",
+    "prettier": "^3.0.3",
     "react": "^18.2.0",
-    "tailwindcss": "^3.3.3",
+    "react-dom": "^18.2.0",
+    "react-test-renderer": "^18.2.0",
     "typescript": "^5.2.2",
     "unquote": "^1.1.1"
   },
   "scripts": {
-    "compile:tailwind": "tailwindcss -i demo/style.css -o demo/public/style.generated.css --minify"
+    "prepare": "bun compile:colors",
+    "prepublishOnly": "bun compile",
+    "check:unit": "bun test",
+    "check:size": "bundlemon",
+    "compile": "bun compile:colors && bun compile:lib && bun compile:transformer && bun compile:types && bun check:size",
+    "compile:colors": "bun scripts/generate-colors.ts",
+    "compile:lib": "bun build src/core.ts src/react.tsx --external=* --outdir=.generated --sourcemap=external --minify",
+    "postcompile:lib": "bun check:size",
+    "compile:demo:css": "tailwindcss -c tailwind.config.ts -i demo/style.css -o demo/public/style.generated.css --minify",
+    "compile:demo:js": "parcel build demo/public/index.html --dist-dir demo/public/.generated",
+    "compile:transformer": "bun build ./transformer.ts --outdir=.generated --sourcemap=external --minify",
+    "compile:types": "tsc -p tsconfig.build.json",
+    "dev": "concurrently 'bun --watch scripts/generate-colors.ts' 'parcel demo/public/index.html --dist-dir demo/public/.generated --open' 'bun compile:demo:css --watch'"
+  },
+  "bundlemon": {
+    "baseDir": ".generated",
+    "files": [
+      {
+        "path": "core.js",
+        "maxSize": "3 kB"
+      },
+      {
+        "path": "react.js",
+        "maxSize": "3 kB"
+      }
+    ]
   }
 }

@@ -1,0 +1,10 @@
+name: setup environment
+description: bun setup
+runs:
+  using: "composite"
+  steps:
+    - uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+    - run: bun install --frozen-lockfile --ignore-scripts
+      shell: bash

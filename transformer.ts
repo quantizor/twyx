@@ -3,7 +3,7 @@ import debug from "debug";
 import escodegen from "escodegen-jsx";
 import * as espree from "espree";
 import unquote from "unquote";
-import { twyx } from "./src/core";
+import { twyx, twyxPropKeys } from "./src/core";
 
 const logger = debug("twyx");
 
@@ -53,33 +53,45 @@ export function transformTwyxProps(rawCode: string) {
 
     node.properties?.forEach((property) => {
       // bail out on unknown nodes
-      if (!t.Property.check(property)) return console.log("unhandled object member", property);
-      else if (!t.Identifier.check(property.key)) return console.log("unhandled object member key type", property);
+      if (!t.Property.check(property)) return logger("unhandled object member", property.type);
+      else if (!t.Identifier.check(property.key)) return logger("unhandled object member key type", property.type);
 
       const propName = property.key.name as string;
+      const topLevelKey = parentObjectKeys.length === 0;
 
-      // {p: thing ? literal : otherLiteral}
-      if (t.ConditionalExpression.check(property.value)) {
-        branches.push(escodegen.generate(property.value.consequent), escodegen.generate(property.value.alternate));
-      } /* {p: literal} */ else if (t.ObjectExpression.check(property.value)) {
-        // don't need to process it again later when the visitor goes deeper
-        seen.add(property.value);
-        processObjectExpressionRecursive(property.value, parentObjectKeys.concat(propName));
-      } else {
-        branches.push(escodegen.generate(property.value));
+      if (topLevelKey ? twyxPropKeys.has(propName) : true) {
+        logger(propName, "(object key)");
+
+        // {p: thing ? literal : otherLiteral}
+        if (t.ConditionalExpression.check(property.value)) {
+          logger(propName, "is condiitonal expression");
+          branches.push(escodegen.generate(property.value.consequent), escodegen.generate(property.value.alternate));
+        } /* {p: {_: literal, md: literal}} */ else if (t.ObjectExpression.check(property.value)) {
+          logger(propName, "is object expression");
+
+          // don't need to process it again later when the visitor goes deeper
+          seen.add(property.value);
+          processObjectExpressionRecursive(property.value, parentObjectKeys.concat(propName));
+        } else {
+          logger(propName, "is literal");
+
+          branches.push(escodegen.generate(property.value));
+        }
+
+        branches.forEach((val) => {
+          let branchObject = { [propName]: unquote(val) };
+
+          classes.push(
+            twyx(
+              parentObjectKeys.reduceRight<object>((obj, key) => {
+                return { [key]: obj };
+              }, branchObject),
+            ),
+          );
+
+          logger("generated classes:", classes.at(-1));
+        });
       }
-
-      branches.forEach((val) => {
-        let branchObject = { [propName]: unquote(val) };
-
-        classes.push(
-          twyx(
-            parentObjectKeys.reduceRight<object>((obj, key) => {
-              return { [key]: obj };
-            }, branchObject)
-          )
-        );
-      });
     });
   }
 
@@ -103,26 +115,34 @@ export function transformTwyxProps(rawCode: string) {
           const propName = attr.name.name as string;
           const branches = [];
 
-          // <div p={something}
-          if (t.JSXExpressionContainer.check(attr.value)) {
-            // <div p={{thing ? literal : otherLiteral}}
-            if (t.ConditionalExpression.check(attr.value.expression)) {
-              branches.push(
-                escodegen.generate(attr.value.expression.consequent),
-                escodegen.generate(attr.value.expression.alternate)
-              );
-            } /* <div p={{_: something}} */ else if (t.ObjectExpression.check(attr.value.expression)) {
-              processObjectExpressionRecursive(attr.value.expression, [propName]);
-            } /* <div p={literal} */ else {
-              branches.push(escodegen.generate(attr.value.expression));
-            }
-          } /* p="literal" */ else {
-            branches.push(escodegen.generate(attr.value));
-          }
+          if (twyxPropKeys.has(propName)) {
+            logger(propName, "(jsx prop)");
 
-          branches.forEach((val) => {
-            classes.push(twyx({ [propName]: unquote(val) }));
-          });
+            // <div p={something}
+            if (t.JSXExpressionContainer.check(attr.value)) {
+              // <div p={{thing ? literal : otherLiteral}}
+              if (t.ConditionalExpression.check(attr.value.expression)) {
+                logger(propName, "is condiitonal expression");
+                branches.push(
+                  escodegen.generate(attr.value.expression.consequent),
+                  escodegen.generate(attr.value.expression.alternate),
+                );
+              } /* <div p={{_: something}} */ else if (t.ObjectExpression.check(attr.value.expression)) {
+                logger(propName, "is object expression");
+                processObjectExpressionRecursive(attr.value.expression, [propName]);
+              } /* <div p={literal} */ else {
+                branches.push(escodegen.generate(attr.value.expression));
+              }
+            } /* p="literal" */ else {
+              logger(propName, "is literal");
+              branches.push(attr.value ? escodegen.generate(attr.value) : propName);
+            }
+
+            branches.forEach((val) => {
+              classes.push(twyx({ [propName]: unquote(val) }));
+              logger("generated classes:", classes.at(-1));
+            });
+          }
         }
       });
 

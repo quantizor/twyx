@@ -1,15 +1,20 @@
 # Logs
 *.log
 
+# macOS
+.DS_Store
+
 # Dependency directories
 node_modules/
 
-# TypeScript cache
+# Cache
 *.tsbuildinfo
+.parcel-cache
 
 # Output of 'npm pack'
 *.tgz
 
 # Generated files
+**/generated.*
 **/.generated
 **/*.generated.*
