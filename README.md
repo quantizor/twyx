@@ -111,12 +111,10 @@ Custom values will be appended to the original type.
 
 ### todo
 
-Community help on the below is very appreciated!
-
+- [x] write some tests
+- [x] set up ci & changesets
 - [ ] figure out if it's possible to hook up Tailwind's nice VS Code extension autocomplete directly to twyx
-- [ ] write some tests
 - [ ] website using astro (just wanna try it and see what's up)
-- [ ] set up ci & changesets
 
 ---
 
