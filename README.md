@@ -2,6 +2,8 @@
 
 tailwind for css people
 
+> Want to add something or make a change? See [CONTRIBUTING](./CONTRIBUTING.md)!
+
 ## install
 
 ```sh
