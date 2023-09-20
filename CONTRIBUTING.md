@@ -127,3 +127,7 @@ To add an adapter for a new framework:
 4. add the file to the `compile:lib` script target
 5. add the file to `tsconfig.json "include"`
 6. add a section to the README
+
+## get credit
+
+If you've contributed a new feature or framework adapter to twyx, it's highly encouraged to add yourself to [`package.json "contributors"`](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#people-fields-author-contributors) (and thank you!)
