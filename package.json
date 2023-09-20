@@ -34,6 +34,7 @@
     "tailwindcss": "^3.3.3"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@types/debug": "^4.1.8",
     "@types/escodegen-jsx": "npm:@types/escodegen",
     "@types/react": "^18.2.21",
@@ -66,7 +67,8 @@
     "compile:demo:js": "parcel build demo/public/index.html --dist-dir demo/public/.generated",
     "compile:transformer": "bun build ./transformer.ts --outdir=.generated --sourcemap=external --minify",
     "compile:types": "tsc -p tsconfig.build.json",
-    "dev": "concurrently 'bun --watch scripts/generate-colors.ts' 'parcel demo/public/index.html --dist-dir demo/public/.generated --open' 'bun compile:demo:css --watch'"
+    "dev": "concurrently 'bun --watch scripts/generate-colors.ts' 'parcel demo/public/index.html --dist-dir demo/public/.generated --open' 'bun compile:demo:css --watch'",
+    "release": "bun compile && changeset publish"
   },
   "bundlemon": {
     "baseDir": ".generated",
