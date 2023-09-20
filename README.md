@@ -96,12 +96,13 @@ import { x } from 'twyx/react'
 If you add additional tailwind utility classes in your project and want them to be picked up by twyx autocomplete, you'll need to do perform a module augmentation like so:
 
 ```ts
-declare module 'twyx' {
+declare module "twyx" {
   export namespace Twyx {
-    type CustomColors = ColorProps<'indigo' | 'chartreuse'>;
+    type CustomColors = ColorProps<"indigo" | "chartreuse">;
 
     export interface PropValues extends ColorProps<BaseColors | BaseColorTransparencies>, CustomColors {
-      aspectRatio: 'my-custom-value';
+      aspectRatio: "my-custom-value";
+    }
   }
 }
 ```
