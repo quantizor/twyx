@@ -1,6 +1,7 @@
 {
   "name": "twyx/react",
   "private": true,
-  "module": "../.generated/react/index.js",
+  "type": "module",
+  "main": "../.generated/react/index.js",
   "types": "../.generated/react/index.d.ts"
 }

@@ -1,6 +1,7 @@
 {
   "name": "twyx/transformer",
   "private": true,
-  "module": "../.generated/transformer/index.js",
+  "type": "module",
+  "main": "../.generated/transformer/index.js",
   "types": "../.generated/transformer/index.d.ts"
 }

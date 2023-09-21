@@ -8,7 +8,8 @@
     "type": "git",
     "url": "https://github.com/probablyup/twyx"
   },
-  "module": ".generated/core.js",
+  "type": "module",
+  "main": ".generated/core.js",
   "types": ".generated/core.d.ts",
   "files": [
     ".generated",
@@ -49,9 +50,10 @@
     "check:unit": "bun test",
     "check:size": "bundlemon",
     "precompile": "rm -rf .generated",
-    "compile": "bun compile:colors && bun compile:lib && bun compile:types && bun check:size",
+    "compile": "bun compile:colors && bun compile:lib && bun compile:transformer && bun compile:types && bun check:size",
     "compile:colors": "bun scripts/generate-colors.ts",
-    "compile:lib": "bun build ./core.ts ./react/index.tsx ./transformer/index.ts --external=* --outdir=.generated --sourcemap=external --minify",
+    "compile:lib": "bun build ./core.ts ./react/index.tsx --external=* --outdir=.generated --sourcemap=external --minify",
+    "compile:transformer": "bun build ./transformer/index.ts --outdir=.generated/transformer --sourcemap=external --minify",
     "postcompile:lib": "bun check:size",
     "compile:demo:css": "tailwindcss -c tailwind.config.ts -i demo/style.css -o demo/public/style.generated.css --minify",
     "compile:types": "tsc -p tsconfig.build.json",
