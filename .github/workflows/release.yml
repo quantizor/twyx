@@ -16,8 +16,10 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
+          commit: "chore: version package(s)"
           # This expects you to have a script called release which does a build for your packages and calls changeset publish
           publish: bun release
+          title: "chore: version package(s)"
         env:
           GITHUB_TOKEN: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
