@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- d3d58a3: Fix `border`, `border*Width`, `outlineWidth` type and application.
+- d3d58a3: Fix `border*Width`, `outlineWidth` type and application. Removed `border` as it's ambiguous with `borderWidth`.
 
 ## 0.1.2
 
