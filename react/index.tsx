@@ -22,7 +22,7 @@ type DynamicElementProps<T extends React.ElementType> = Twyx.Props &
 export const elementFactory = <T extends React.ElementType>(base: T) =>
   React.forwardRef(
     <Target extends React.ElementType>(
-      { as, children, className, ...rest }: DynamicElementProps<Target>,
+      { as, children, className = "", ...rest }: DynamicElementProps<Target>,
       ref: React.Ref<Target>,
     ): React.ReactElement | null => {
       return React.createElement(
