@@ -12,6 +12,8 @@
   "types": ".generated/core.d.ts",
   "files": [
     ".generated",
+    "react/package.json",
+    "transformer/package.json",
     "README.md",
     "LICENSE"
   ],
