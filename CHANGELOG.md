@@ -1,5 +1,11 @@
 # twyx
 
+## 0.1.3
+
+### Patch Changes
+
+- d3d58a3: Fix `border`, `border*Width`, `outlineWidth` type and application.
+
 ## 0.1.2
 
 ### Patch Changes
