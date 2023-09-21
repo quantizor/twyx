@@ -52,9 +52,8 @@
     "compile:lib": "bun build ./core.ts ./react/index.tsx ./transformer/index.ts --external=* --outdir=.generated --sourcemap=external --minify",
     "postcompile:lib": "bun check:size",
     "compile:demo:css": "tailwindcss -c tailwind.config.ts -i demo/style.css -o demo/public/style.generated.css --minify",
-    "compile:demo:js": "parcel build demo/public/index.html --dist-dir demo/public/.generated",
     "compile:types": "tsc -p tsconfig.build.json",
-    "dev": "concurrently 'bun --watch scripts/generate-colors.ts' 'parcel demo/public/index.html --dist-dir demo/public/.generated --open' 'bun compile:demo:css --watch'",
+    "dev": "concurrently 'bun --watch scripts/generate-colors.ts' 'bun compile:demo:css --watch'",
     "release": "bun compile && changeset publish"
   },
   "bundlemon": {
