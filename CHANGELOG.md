@@ -1,5 +1,11 @@
 # twyx
 
+## 0.1.4
+
+### Patch Changes
+
+- 4a5d22f: Adjust `package.json` and subfolder JSONs to reflect default ESM status.
+
 ## 0.1.3
 
 ### Patch Changes
