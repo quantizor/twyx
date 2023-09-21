@@ -1,5 +1,5 @@
 import * as ReactDOM from "react-dom/client";
-import { twyx, x } from "../src/react";
+import { twyx, x } from "../react/index";
 
 const foo = true;
 const className = twyx({
