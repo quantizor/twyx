@@ -2,4 +2,4 @@
 "twyx": patch
 ---
 
-Rework module setup to avoid issues with `package.json "exports"` mappings.
+Rework file system setup to avoid use of `package.json "exports"` mapping.
