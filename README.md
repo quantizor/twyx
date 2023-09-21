@@ -67,6 +67,7 @@ export default {
     ],
     transform: {
       js: transformTwyxProps,
+      jsx: transformTwyxProps,
       tsx: transformTwyxProps,
     },
   },
