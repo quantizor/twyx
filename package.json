@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/probablyup/twyx"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": ".generated/core.js",
   "types": ".generated/core.d.ts",
