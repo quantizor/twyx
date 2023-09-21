@@ -1,8 +1,42 @@
 # twyx
 
-tailwind for css people
+**_tailwind for css people_**
 
-> Want to add something or make a change? See [CONTRIBUTING](./CONTRIBUTING.md)!
+twyx is an abstraction on top of [tailwind](https://tailwindcss.com/) that seeks to make the framework more approachable to those that grew up with and/or prefer CSS syntax. It maps real CSS properties with the classes they target in a tiny wrapper. For more info on library design and tradeoffs, see [CONTRIBUTING](./CONTRIBUTING.md).
+
+### standalone
+
+```tsx
+import { twyx } from "twyx";
+
+const classes = twyx(
+  {
+    borderColor: "red-500",
+    borderStyle: { _: "solid", md: "dashed", dark: { _: "dashed", md: "solid" } },
+    borderWidth: 1,
+  },
+  "additional classes here",
+);
+
+// out:
+// classes === "border border-solid md:border-dashed dark:border-dashed md:dark:border-solid border-red-500 additional classes here"
+```
+
+### react
+
+`twyx/react` supports the [polymorphic "as" prop](https://www.robinwieruch.de/react-as-prop/) for dynamic composition of element as well as styling.
+
+```tsx
+import { x } from 'twyx/react'
+
+// in
+<x.div as="p" borderWidth={1} borderStyle={{_: 'solid', md: 'dashed', dark: {_:'dashed', md:'solid'}}} borderColor="red-500" />
+
+// out
+<p className="border border-solid md:border-dashed dark:border-dashed md:dark:border-solid border-red-500" />
+```
+
+> _Why "x"?_ twyx was inspired by [xstyled](https://xstyled.dev/), a prop-contemporary focusing on the styled-components ecosystem. Great artists steal, h/t to @gregberge :bow:
 
 ## install
 
@@ -63,33 +97,6 @@ twyx({
 > **Why?** Tailwind runs a simple scanner over files to determine if classes it knows about are in use. If you write
 > conditional styles in such a way that the whole string is not present at build time, the scanner will not work and
 > the class will not be generated unless you [manually safelist](https://tailwindcss.com/docs/content-configuration#safelisting-classes) it.
-
-### standalone
-
-```tsx
-import { twyx } from "twyx";
-
-const classes = twyx({
-  borderColor: "red-500",
-  borderStyle: { _: "solid", md: "dashed", dark: { _: "dashed", md: "solid" } },
-  borderWidth: 1,
-})();
-
-// out:
-// classes === "border border-solid md:border-dashed dark:border-dashed md:dark:border-solid border-red-500"
-```
-
-### react
-
-```tsx
-import { x } from 'twyx/react'
-
-// in
-<x.div as="p" borderWidth={1} borderStyle={{_: 'solid', md: 'dashed', dark: {_:'dashed', md:'solid'}}} borderColor="red-500" />
-
-// out
-<p className="border border-solid md:border-dashed dark:border-dashed md:dark:border-solid border-red-500" />
-```
 
 ### extending twyx
 
