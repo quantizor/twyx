@@ -121,12 +121,11 @@ twyx is designed as both a core standalone library and with third-party framewor
 
 To add an adapter for a new framework:
 
-1. create an appropriately-named file in the `src` directory and integrate `twyx` using the best practices of your framework.
-2. try to limit installed packages to the bare minimum
-3. add an entry to `package.json "exports"` for the new file
-4. add the file to the `compile:lib` script target
-5. add the file to `tsconfig.json "include"`
-6. add a section to the README
+1. create an appropriately-named directory off the root directory and integrate `twyx` using the best practices of your framework
+2. try to limit installed packages to the bare minimum (put these in the root `package.json`)
+3. add any framework-specific install instructions to the [README.md](./README.md)
+4. add the directory entrypoint to the `compile:lib` script target
+5. add the directory `package.json` to the root `package.json "files"` array
 
 ## get credit
 
