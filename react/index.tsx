@@ -24,14 +24,14 @@ export const elementFactory = <T extends React.ElementType>(base: T) =>
     <Target extends React.ElementType>(
       { as, children, className, ...rest }: DynamicElementProps<Target>,
       ref: React.Ref<Target>,
-    ): React.ReactNode => {
+    ): React.ReactElement | null => {
       return React.createElement(
         as || base,
         Object.assign(stripTwyxProps(rest), { ref, className: `${twyx(rest)} ${className}`.trim() }),
         children,
       );
     },
-  ) as <Target extends React.ElementType = T>(props: DynamicElementProps<Target>) => React.ReactNode;
+  ) as <Target extends React.ElementType = T>(props: DynamicElementProps<Target>) => React.ReactElement | null;
 
 // lazily instantiate a factory for any requested element
 const x = new Proxy(
