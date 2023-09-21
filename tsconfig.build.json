@@ -7,5 +7,5 @@
     "emitDeclarationOnly": true,
     "noEmit": false
   },
-  "exclude": ["src/**/*.test.*"]
+  "exclude": ["demo", "node_modules", "scripts", "*.test.*", "*.config.ts"]
 }

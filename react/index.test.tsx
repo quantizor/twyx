@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import rtr from "react-test-renderer";
-import { x } from "./react";
+import { x } from ".";
 
 /**
  * Type tests

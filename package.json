@@ -9,21 +9,7 @@
     "url": "https://github.com/probablyup/twyx"
   },
   "module": ".generated/core.js",
-  "types": ".generated/src/core.d.ts",
-  "exports": {
-    ".": {
-      "types": "./.generated/src/core.d.ts",
-      "import": "./.generated/core.js"
-    },
-    "./react": {
-      "types": "./.generated/src/react.d.ts",
-      "import": "./.generated/react.js"
-    },
-    "./transformer": {
-      "types": "./.generated/transformer.d.ts",
-      "import": "./.generated/transformer.js"
-    }
-  },
+  "types": ".generated/core.d.ts",
   "files": [
     ".generated",
     "README.md",
@@ -60,13 +46,13 @@
     "prepublishOnly": "bun compile",
     "check:unit": "bun test",
     "check:size": "bundlemon",
-    "compile": "bun compile:colors && bun compile:lib && bun compile:transformer && bun compile:types && bun check:size",
+    "precompile": "rm -rf .generated",
+    "compile": "bun compile:colors && bun compile:lib && bun compile:types && bun check:size",
     "compile:colors": "bun scripts/generate-colors.ts",
-    "compile:lib": "bun build src/core.ts src/react.tsx --external=* --outdir=.generated --sourcemap=external --minify",
+    "compile:lib": "bun build ./core.ts ./react/index.tsx ./transformer/index.ts --external=* --outdir=.generated --sourcemap=external --minify",
     "postcompile:lib": "bun check:size",
     "compile:demo:css": "tailwindcss -c tailwind.config.ts -i demo/style.css -o demo/public/style.generated.css --minify",
     "compile:demo:js": "parcel build demo/public/index.html --dist-dir demo/public/.generated",
-    "compile:transformer": "bun build ./transformer.ts --outdir=.generated --sourcemap=external --minify",
     "compile:types": "tsc -p tsconfig.build.json",
     "dev": "concurrently 'bun --watch scripts/generate-colors.ts' 'parcel demo/public/index.html --dist-dir demo/public/.generated --open' 'bun compile:demo:css --watch'",
     "release": "bun compile && changeset publish"
@@ -75,11 +61,11 @@
     "baseDir": ".generated",
     "files": [
       {
-        "path": "core.js",
+        "path": "./core.js",
         "maxSize": "3 kB"
       },
       {
-        "path": "react.js",
+        "path": "./react/index.js",
         "maxSize": "3 kB"
       }
     ]

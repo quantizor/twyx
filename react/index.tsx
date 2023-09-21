@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Twyx, twyx, twyxPropKeys } from "./core";
-import { FastOmit } from "./types";
+import { Twyx, twyx, twyxPropKeys } from "../core";
+import { FastOmit } from "../types";
 
 /**
  * Given an unknown set of props, peel off ones we know are related to twyx.
@@ -53,5 +53,5 @@ const x = new Proxy(
   },
 );
 
-export * from "./core";
+export * from "../core";
 export { x };

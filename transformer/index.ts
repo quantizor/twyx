@@ -3,7 +3,7 @@ import debug from "debug";
 import escodegen from "escodegen-jsx";
 import * as espree from "espree";
 import unquote from "unquote";
-import { twyx, twyxPropKeys } from "./src/core";
+import { twyx, twyxPropKeys } from "../core";
 
 const logger = debug("twyx");
 

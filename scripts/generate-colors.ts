@@ -6,7 +6,7 @@ import theme from "tailwindcss/defaultTheme";
 const ignored = ["lightBlue", "warmGray", "trueGray", "coolGray", "blueGray"];
 const skip_steps = ["inherit", "current", "default", "transparent"];
 
-const colors = Object.keys(allColors).filter((x) => !ignored.includes(x));
+const colors = Object.keys(allColors).filter((x) => !ignored.includes(x)) as (keyof typeof allColors)[];
 const opacities = Object.keys(theme.opacity);
 
 let base = "";
@@ -45,4 +45,4 @@ export type BaseColors = ${base.trim()};
 export type BaseColorTransparencies = ${variants.trim()};
 `.trimStart();
 
-fs.writeFileSync(path.join(import.meta.dir, "../src/generated.ts"), content, "utf-8");
+fs.writeFileSync(path.join(import.meta.dir, "../generated.ts"), content, "utf-8");

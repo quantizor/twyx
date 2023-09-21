@@ -1,0 +1,4 @@
+{
+  "module": "../.generated/transformer/index.js",
+  "types": "../.generated/transformer/index.d.ts"
+}
