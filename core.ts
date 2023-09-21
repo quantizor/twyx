@@ -160,7 +160,7 @@ export namespace Twyx {
   type ColorVariants = `${string}/${`[${string}]`}`;
 
   type BorderRadius = Exclude<keyof DefaultTheme["borderRadius"], "DEFAULT"> | "default";
-  type BorderWidth = Exclude<keyof DefaultTheme["borderWidth"], "DEFAULT"> | "1";
+  type BorderWidth = Stringify<0 | 1 | 2 | 4 | 8>;
 
   type BlendMode =
     | "normal"
@@ -267,7 +267,6 @@ export namespace Twyx {
       | ArbitraryValue;
     backgroundRepeat: "repeat" | "no-repeat" | "repeat-x" | "repeat-y" | "repeat-round" | "repeat-space";
     backgroundSize: "auto" | "cover" | "contain" | ArbitraryValue;
-    border: BorderWidth | ArbitraryValue;
     borderBottomLeftRadius: BorderRadius | ArbitraryValue;
     borderBottomRightRadius: BorderRadius | ArbitraryValue;
     borderBottomWidth: BorderWidth | ArbitraryValue;
@@ -550,6 +549,8 @@ const fontWeightMap = {
   "900": "black",
 };
 
+const borderWidth = (v: Twyx.PropValues["borderWidth"], p: string): string => (String(v) === "1" ? p : `${p}-${v}`);
+
 /**
  * For each twyx-enabled styling prop, the root class is provided along with an optional
  * `prepare` function for customizing the given value if necessary.
@@ -578,25 +579,24 @@ const transforms: Twyx.Transforms = {
   backgroundRepeat: branch("bg"),
   backgroundSize: branch("bg"),
   bg: branch("bg"),
-  border: branch("border"),
   borderBottomColor: branch("border-b"),
   borderBottomLeftRadius: branch("rounded-bl"),
   borderBottomRightRadius: branch("rounded-br"),
-  borderBottomWidth: branch("border-b"),
+  borderBottomWidth: branch("border-b", borderWidth),
   borderCollapse: branch("border"),
   borderColor: branch("border"),
   borderLeftColor: branch("border-l"),
-  borderLeftWidth: branch("border-l"),
+  borderLeftWidth: branch("border-l", borderWidth),
   borderRadius: branch("rounded"),
   borderRightColor: branch("border-r"),
-  borderRightWidth: branch("border-r"),
+  borderRightWidth: branch("border-r", borderWidth),
   borderSpacing: branch("border-spacing"),
   borderStyle: branch("border"),
   borderTopColor: branch("border-t"),
   borderTopLeftRadius: branch("rounded-tl"),
   borderTopRightRadius: branch("rounded-tr"),
-  borderTopWidth: branch("border-t"),
-  borderWidth: branch("border-t"),
+  borderTopWidth: branch("border-t", borderWidth),
+  borderWidth: branch("border", borderWidth),
   bottom: branch("bottom"),
   boxDecorationBreak: branch("box-decoration"),
   boxShadow: branch("shadow", (v, p): string => (v === "default" ? p : `${p}-${v}`)),
@@ -678,7 +678,7 @@ const transforms: Twyx.Transforms = {
   outlineColor: branch("outline"),
   outlineOffset: branch("outline-offset"),
   outlineStyle: branch("outline", (v, p): string => (v === "solid" ? p : `${p}-${v}`)),
-  outlineWidth: branch("outline"),
+  outlineWidth: branch("outline", borderWidth),
   overflow: branch("overflow"),
   overflowX: branch("overflow-x"),
   overflowY: branch("overflow-y"),
