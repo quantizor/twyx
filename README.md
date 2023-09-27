@@ -26,14 +26,35 @@ const classes = twyx(
 
 `twyx/react` supports the [polymorphic "as" prop](https://www.robinwieruch.de/react-as-prop/) for dynamic composition of element as well as styling.
 
+You can use the `twyx` function directly with `className` in React or try the `x` primitives.
+
 ```tsx
 import { x } from 'twyx/react'
 
-// in
-<x.div as="p" borderWidth={1} borderStyle={{_: 'solid', md: 'dashed', dark: {_:'dashed', md:'solid'}}} borderColor="red-500" />
+// option 1: twyx function
+<div
+  className={twyx({
+    borderColor: 'red-500',
+    borderWidth: 1,
+    borerStyle: {
+      _:'solid',
+      md: 'dashed',
+      dark: {
+        _: 'dashed',
+        md: 'solid'
+      },
+    }
+  }, 'other classes if desired')}
+/>
 
 // out
-<p className="border border-solid md:border-dashed dark:border-dashed md:dark:border-solid border-red-500" />
+// <div className="border-red-500 border-solid md:border-dashed dark:border-dashed md:dark:border-solid other classes if desired" />
+
+// option 2: x.* primitives
+<x.div as="p" className="other classes if desired" borderColor="red-500" borderStyle={{_: 'solid', md: 'dashed', dark: {_:'dashed', md:'solid'}}} borderWidth={1} />
+
+// out
+// <p className="border-red-500 border-solid md:border-dashed dark:border-dashed md:dark:border-solid border other classes if desired" />
 ```
 
 > _Why "x"?_ twyx was inspired by [xstyled](https://xstyled.dev/), a prop-contemporary focusing on the styled-components ecosystem. Great artists steal, h/t to @gregberge :bow:
