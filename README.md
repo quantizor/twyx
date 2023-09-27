@@ -29,7 +29,7 @@ const classes = twyx(
 You can use the `twyx` function directly with `className` in React or try the `x` primitives.
 
 ```tsx
-import { x } from 'twyx/react'
+import { twyx, x } from 'twyx/react'
 
 // option 1: twyx function
 <div
